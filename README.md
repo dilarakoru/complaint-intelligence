@@ -230,8 +230,3 @@ tests/                  Automated tests
 .github/workflows/      CI
 ```
 
-## Limits and next experiments
-
-Acquire a larger documented sample; test temporal/company-aware holdouts; evaluate near-duplicates, subgroup errors and calibration; create a human-rated excerpt benchmark. Public deployment would need authentication, rate limits and explicit data handling. Only load trusted, locally generated pickle artifacts. Raw narratives and model caches are not published.
-
-[Engineering decisions and demo](docs/ENGINEERING.md) · [Provenance and AI assistance](docs/PROVENANCE.md). Third-party components retain their licenses; no blanket dataset/model redistribution license is granted.
