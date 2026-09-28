@@ -12,28 +12,28 @@ A historical Colab notebook records CUDA execution on an **NVIDIA L4** GPU. That
 - XGBoost and LightGBM classifiers;
 - SHAP for feature-importance analysis.
 
-The notebook compared four representation strategies:
+The notebook explored four representation strategies:
 
 - S1 — classical/tabular baseline;
 - S2 — classical features + direct text embedding;
 - S3 — classical features + LLM summary embedding;
 - S4 — classical features + direct embedding + LLM summary embedding.
 
-## Recorded ablation result
+## Evaluation lesson
 
-One saved experiment table contains the following comparison:
+The historical experiment produced apparently stronger scores, but those values are **not valid generalization evidence**. The old workflow contained train/test duplicate contamination and compared candidate models/scenarios on test F1. Those issues make the recorded scores unsuitable as a benchmark, so this repository intentionally does not present them as current performance claims.
 
-| Model / scenario | Accuracy | Precision | Recall | F1 | ROC-AUC |
-|---|---:|---:|---:|---:|---:|
-| XGBoost — S4 | 0.7987 | 0.8176 | 0.7683 | 0.7921 | 0.8470 |
-| XGBoost — S2 | 0.7924 | 0.8087 | 0.7651 | 0.7863 | 0.8512 |
-| LightGBM — S2 | 0.7845 | 0.7954 | 0.7651 | 0.7799 | 0.8463 |
-| XGBoost — S1 | 0.7829 | 0.7908 | 0.7683 | 0.7794 | 0.8540 |
-| XGBoost — S3 | 0.7829 | 0.8027 | 0.7492 | 0.7750 | 0.8553 |
+The useful conclusion from that work is methodological: richer representations and an LLM-derived summary were worth exploring, but representation complexity must be evaluated with an isolated validation set and a genuinely untouched test set.
 
-The experiment is useful because it shows that adding an LLM-derived summary was not automatically the strongest representation: the direct-embedding configuration remained competitive and produced the highest ROC-AUC among the rows shown above.
+The cleaned public implementation in [../research/semantic_ablation.py](../research/semantic_ablation.py) therefore:
 
-These historical results are not the benchmark for the current deployed classifier. They come from a separate experiment setup and are documented as development history rather than current product performance.
+1. reuses the current duplicate/conflict cleaning;
+2. creates train/validation/test splits with identity and normalized-text isolation;
+3. fits preprocessing and PCA on training data only;
+4. selects the model/scenario using validation F1;
+5. evaluates the selected training fit once on held-out test data.
+
+No cleaned GPU ablation score is claimed until that corrected experiment is rerun and its inputs are documented.
 
 ## Why the current application is simpler
 
