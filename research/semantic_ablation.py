@@ -56,15 +56,27 @@ def add_research_features(df: pd.DataFrame) -> pd.DataFrame:
 
     company = result.get("company", pd.Series("Unknown", index=result.index)).fillna("Unknown").astype(str)
     result["company_cleaned"] = company.str.upper().str.strip()
-    top_companies = set(result["company_cleaned"].value_counts().head(10).index)
-    result["company_cleaned"] = result["company_cleaned"].where(
-        result["company_cleaned"].isin(top_companies), "OTHER COMPANIES"
-    )
 
     if "tags" not in result:
         result["tags"] = "Missing"
     result["tags"] = result["tags"].fillna("Missing").astype(str)
     return result
+
+
+def group_companies_from_train(train_df: pd.DataFrame, *other_frames: pd.DataFrame):
+    """Learn the frequent-company grouping from training data only."""
+    train = train_df.copy()
+    others = [frame.copy() for frame in other_frames]
+    top_companies = set(train["company_cleaned"].value_counts().head(10).index)
+
+    train["company_cleaned"] = train["company_cleaned"].where(
+        train["company_cleaned"].isin(top_companies), "OTHER COMPANIES"
+    )
+    for frame in others:
+        frame["company_cleaned"] = frame["company_cleaned"].where(
+            frame["company_cleaned"].isin(top_companies), "OTHER COMPANIES"
+        )
+    return (train, *others)
 
 
 def prepare_classical(train_df: pd.DataFrame, *other_frames: pd.DataFrame):
@@ -201,6 +213,9 @@ def main() -> None:
     raw = pd.read_csv(args.data, dtype={"complaint_id": str})
     cleaned = add_research_features(clean_data(raw))
     train_df, validation_df, test_df = split_data(cleaned, seed=42)
+    train_df, validation_df, test_df = group_companies_from_train(
+        train_df, validation_df, test_df
+    )
 
     x_train_classic, x_val_classic, x_test_classic = prepare_classical(
         train_df, validation_df, test_df
