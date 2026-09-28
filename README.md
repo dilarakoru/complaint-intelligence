@@ -89,6 +89,8 @@ Earlier research iterations explored **Qwen2.5-0.5B-Instruct**, **SentenceTransf
 
 Those experiments are separate from the current supported serving/evaluation path. The current classifier remains intentionally CPU-compatible and reproducible. See [Experiment history](docs/EXPERIMENT_HISTORY.md) for the recorded GPU/embedding comparisons.
 
+A cleaned implementation of the S1-S4 semantic-feature experiment is available at [research/semantic_ablation.py](research/semantic_ablation.py).
+
 ### Optional local LLM
 
 In the current application, `Qwen/Qwen2.5-0.5B-Instruct` runs through Transformers on CPU in float32. It sees at most the first 2,000 input characters and generates at most 100 new tokens without sampling. It is asked to copy one informative source sentence.
