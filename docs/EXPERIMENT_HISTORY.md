@@ -29,7 +29,7 @@ The cleaned public implementation in [../research/semantic_ablation.py](../resea
 
 1. reuses the current duplicate/conflict cleaning;
 2. creates train/validation/test splits with identity and normalized-text isolation;
-3. fits preprocessing and PCA on training data only;
+3. learns category grouping, preprocessing and PCA on training data only;
 4. selects the model/scenario using validation F1;
 5. evaluates the selected training fit once on held-out test data.
 
