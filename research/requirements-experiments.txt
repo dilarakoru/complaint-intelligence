@@ -1,0 +1,5 @@
+-r ../requirements-llm.txt
+sentence-transformers
+xgboost
+lightgbm
+shap
