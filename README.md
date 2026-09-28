@@ -8,7 +8,7 @@ The engineering focus is the path from imperfect data to an inspectable product:
 
 ![Complaint analysis interface](docs/preview.png)
 
-**Contents:** [Data](#data-and-target) · [Architecture](#architecture) · [Methods](#methods) · [Results](#results) · [Run](#installation) · [API](#api) · [Tests](#tests-and-validation)
+**Contents:** [Data](#data-and-target) · [Architecture](#architecture) · [Methods](#methods) · [Experiments](docs/EXPERIMENT_HISTORY.md) · [Results](#results) · [Run](#installation) · [API](#api) · [Tests](#tests-and-validation)
 
 ## Problem and user flow
 
@@ -87,7 +87,7 @@ Historical PCA, XGBoost/LightGBM and SHAP modules are kept under [research/](res
 
 Earlier research iterations explored **Qwen2.5-0.5B-Instruct**, **SentenceTransformer embeddings (all-MiniLM-L6-v2)**, PCA, XGBoost/LightGBM and SHAP using CUDA-enabled GPU compute, including an **NVIDIA L4**. These experiments compared classical features, direct text embeddings, LLM-derived summary embeddings and hybrid representations.
 
-Those experiments are separate from the current supported serving/evaluation path. The current classifier remains intentionally CPU-compatible and reproducible.
+Those experiments are separate from the current supported serving/evaluation path. The current classifier remains intentionally CPU-compatible and reproducible. See [Experiment history](docs/EXPERIMENT_HISTORY.md) for the recorded GPU/embedding comparisons.
 
 ### Optional local LLM
 
@@ -230,7 +230,7 @@ data_loader.py          Deterministic cleaning and deduplication
 llm_processor.py        Optional Qwen and source-grounding validation
 data/demo.csv           Synthetic fixture
 templates/index.html    Browser UI
-docs/                   Evaluation, screenshot, decisions and provenance
+docs/                   Evaluation, screenshot and experiment history
 research/               Historical unsupported experiments
 tests/                  Automated tests
 .github/workflows/      CI
