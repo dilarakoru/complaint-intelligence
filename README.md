@@ -47,7 +47,7 @@ Target **0 / explanation** is `Closed with explanation`. Target **1 / relief** c
 6. Assert zero ID and normalized-text overlap between each pair of splits.
 7. Fit all learned preprocessing on training data only; select using validation F1; evaluate the selected training fit on test without refitting on validation.
 
-The earlier split had 66/80 test rows sharing IDs with training and 68/80 sharing narratives. Its reported 0.875 accuracy is not independent performance evidence. The corrected version also changes the modeling approach, so the scores are not a controlled before/after model comparison.
+A historical audit of the earlier private split found 66/80 test rows sharing IDs with training and 68/80 sharing normalized narratives. Its reported 0.875 accuracy is not independent performance evidence. The corrected version also changes the modeling approach, so the scores are not a controlled before/after model comparison.
 
 ## Architecture
 
@@ -214,7 +214,7 @@ Prediction response fields: `prediction`, `probability`, `contributions`, `note`
 python -m unittest discover -s tests -v
 ```
 
-Four tests cover conflicting duplicate labels, split isolation, invented-excerpt rejection and synthetic end-to-end training/API behavior, including invalid requests and disabled LLM handling. CI uses Python 3.10. These checks establish software behavior, not predictive quality.
+Five tests cover conflicting duplicate labels, split isolation, training-only research grouping, invented-excerpt rejection and synthetic end-to-end training/API behavior, including invalid requests and disabled LLM handling. CI uses Python 3.10. These checks establish software behavior, not predictive quality.
 
 | Issue | Resolution |
 |---|---|
