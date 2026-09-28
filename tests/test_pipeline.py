@@ -30,6 +30,14 @@ class PipelineTests(unittest.TestCase):
         raw=pd.read_csv(ROOT/'data/demo.csv');bad=raw.iloc[[0]].copy()
         bad['company_response']='Closed with explanation' if raw.iloc[0].company_response!='Closed with explanation' else 'Closed with monetary relief'
         self.assertEqual(len(clean_data(pd.concat([raw,bad]))),len(raw)-1)
+    def test_research_company_grouping_uses_train_only(self):
+        from research.semantic_ablation import group_companies_from_train
+        train = pd.DataFrame({"company_cleaned": ["A"] * 4 + ["B"] * 3})
+        validation = pd.DataFrame({"company_cleaned": ["A", "UNSEEN"]})
+        grouped_train, grouped_validation = group_companies_from_train(train, validation)
+        self.assertEqual(grouped_train.company_cleaned.tolist(), train.company_cleaned.tolist())
+        self.assertEqual(grouped_validation.company_cleaned.tolist(), ["A", "OTHER COMPANIES"])
+
     def test_training_and_api(self):
         with tempfile.TemporaryDirectory() as folder:
             report=train(ROOT/'data/demo.csv',folder,synthetic=True)
