@@ -1,5 +1,7 @@
 # Complaint Intelligence
 
+[![CI](https://github.com/dilarakoru/complaint-intelligence/actions/workflows/ci.yml/badge.svg)](https://github.com/dilarakoru/complaint-intelligence/actions/workflows/ci.yml)
+
 > Product walkthrough, design trade-offs and next experiments: [Engineering notes](docs/ENGINEERING.md).
 
 ![Application preview](docs/preview.png)
