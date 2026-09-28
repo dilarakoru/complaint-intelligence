@@ -83,9 +83,15 @@ The **structured baseline** uses categories and length features; the **text hybr
 
 Historical PCA, XGBoost/LightGBM and SHAP modules are kept under [research/](research/) for context; they are not the supported training or serving pipeline.
 
+### Historical GPU experimentation
+
+Earlier research iterations explored **Qwen2.5-0.5B-Instruct**, **SentenceTransformer embeddings (all-MiniLM-L6-v2)**, PCA, XGBoost/LightGBM and SHAP using CUDA-enabled GPU compute, including an **NVIDIA L4**. These experiments compared classical features, direct text embeddings, LLM-derived summary embeddings and hybrid representations.
+
+Those experiments are separate from the current supported serving/evaluation path. The current classifier remains intentionally CPU-compatible and reproducible.
+
 ### Optional local LLM
 
-`Qwen/Qwen2.5-0.5B-Instruct` runs through Transformers on CPU in float32. It sees at most the first 2,000 input characters and generates at most 100 new tokens without sampling. It is asked to copy one informative source sentence.
+In the current application, `Qwen/Qwen2.5-0.5B-Instruct` runs through Transformers on CPU in float32. It sees at most the first 2,000 input characters and generates at most 100 new tokens without sampling. It is asked to copy one informative source sentence.
 
 After whitespace normalization, the candidate must be at least 20 characters and occur in the source. Otherwise the first source sentence is returned with the explicit method label `deterministic source-excerpt fallback`. This rejects unsupported generated text but does not establish excerpt usefulness or completeness. LLM output never changes the classifier result.
 
