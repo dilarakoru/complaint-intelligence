@@ -43,3 +43,16 @@ python research/semantic_ablation.py \
 The original notebook experiment contained train/test duplicates and selected its best candidate on test F1. Its scores are retained only in the private research history and are not valid benchmark evidence. See [../docs/EXPERIMENT_HISTORY.md](../docs/EXPERIMENT_HISTORY.md).
 
 `feature_engineer.py` and `explainability.py` preserve earlier PCA/feature-engineering and SHAP exploration for code review. They are not imported by the serving application.
+
+
+## Historical split overlap audit
+
+`audit_split_overlap.py` reproduces the identity/text overlap check when the original private train/test CSVs are available:
+
+```bash
+python research/audit_split_overlap.py \
+  --train /path/to/old_train.csv \
+  --test /path/to/old_test.csv
+```
+
+The public repository does not include the original complaint narratives, so the historical 66/80 ID-overlap and 68/80 normalized-text-overlap counts cannot be recomputed from the synthetic fixture. The current pipeline instead enforces zero overlap through assertions and automated tests.
