@@ -81,13 +81,13 @@ Training and serving are separate. The API loads and caches a locally generated 
 
 The **structured baseline** uses categories and length features; the **text hybrid** adds TF-IDF. Both are fitted on training data only. TF-IDF is not an LLM embedding. The UI shows up to eight nonzero contributions with largest absolute magnitude. These are not SHAP values or causal effects. The intercept and smaller contributions are omitted from the display, so the displayed list is not the full score decomposition.
 
-Historical PCA, XGBoost/LightGBM and SHAP modules are kept under [research/](research/) for context; they are not the supported training or serving pipeline.
+Optional code under [research/](research/) explores SentenceTransformer embeddings, PCA, XGBoost/LightGBM and SHAP; it is separate from the supported training and serving pipeline.
 
 ### Historical GPU experimentation
 
 Earlier research iterations explored **Qwen2.5-0.5B-Instruct**, **SentenceTransformer embeddings (all-MiniLM-L6-v2)**, PCA, XGBoost/LightGBM and SHAP using CUDA-enabled GPU compute, including an **NVIDIA L4**. These experiments compared classical features, direct text embeddings, LLM-derived summary embeddings and hybrid representations.
 
-Those experiments are separate from the current supported serving/evaluation path. The current classifier remains intentionally CPU-compatible and reproducible. See [Experiment history](docs/EXPERIMENT_HISTORY.md) for the recorded GPU/embedding comparisons.
+Those experiments are separate from the current supported serving/evaluation path. The current classifier remains intentionally CPU-compatible and reproducible. See [Experiment history](docs/EXPERIMENT_HISTORY.md) for the historical GPU/embedding setup and the evaluation issues found in the original experiment.
 
 A cleaned implementation of the S1-S4 semantic-feature experiment is available at [research/semantic_ablation.py](research/semantic_ablation.py).
 
@@ -233,7 +233,7 @@ llm_processor.py        Optional Qwen and source-grounding validation
 data/demo.csv           Synthetic fixture
 templates/index.html    Browser UI
 docs/                   Evaluation, screenshot and experiment history
-research/               Historical unsupported experiments
+research/               Optional semantic ablation and historical utilities
 tests/                  Automated tests
 .github/workflows/      CI
 ```
